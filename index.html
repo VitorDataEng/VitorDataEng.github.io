@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcar Presença</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body style="background-image: linear-gradient(-20deg, #663399, #663399, #6699ff, #6699ff);">
+    <div class="container d-flex justify-content-center align-items-center">        
+        <div class="form-container">
+            <img src="assets/img/hiper.svg" alt="Sua Imagem" style="width: 100%; max-width: 400px; display: block; margin: 0 auto;">
+            <div style="padding: 10px;"></div>
+            <h2 class="text-center mb-4" style="color: #575757;">Marcar Presença</h2>
+            <div class="form-group">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" class="form-control" placeholder="Seu Nome">
+            </div>
+            <div class="form-group">
+                <label for="setor" style="color: #575757">Tipo de presença:</label>
+                <select id="setor" class="form-control" onchange="mostrarTipo()" >
+                    <option value="Hiper">Hiper</option>
+                    <option value="Stone">Stone</option>
+                    <option value="Convidado" selected>Convidado</option>
+                </select>
+            </div>
+            <div class="form-group tipo-select">
+                <label for="tipo" style="color: #575757">Empresa:</label>
+                <input type="text" id="tipo" class="form-control" placeholder="Nom da sua empresa aqui">
+            </div>
+            <button onclick="marcarPresenca()" class="btn btn-primary btn-block" style="background-color: #663399;border-color: #663399;">Enviar</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="assets/js/script.js"></script>
+    <!-- <script src="assets/js/animation.js"></script> -->
+</body>
+
+</html>
+
