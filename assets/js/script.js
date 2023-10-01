@@ -6,17 +6,16 @@ function marcarPresenca() {
     const dados = {
         nome: nome,
         setor: setor,
-        empresa: empresa
+        empresa: empresa ? empresa : ''
     };
+
+    sendData(dados);
 
     localStorage.setItem('dadosPresenca', JSON.stringify(dados));
 
-
     document.getElementById('nome').value = '';
-    document.getElementById('setor').value = 'Convidado';
+    document.getElementById('setor').value = '';
     document.getElementById('tipo').value = '';
-
-    alert('Dados de presença marcados com sucesso!');
 }
 
 function mostrarTipo() {
@@ -29,6 +28,7 @@ function mostrarTipo() {
     }
 }
 
+// local storage pra não precisar inserir sempre os
 document.addEventListener('DOMContentLoaded', function() {
     const dados = JSON.parse(localStorage.getItem('dadosPresenca'));
 
@@ -36,12 +36,39 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('nome').value = dados.nome;
         document.getElementById('setor').value = dados.setor;
         document.getElementById('tipo').value = dados.empresa;
-
         mostrarTipo(); 
     }
 });
 
-function sendData(){
+function sendData(dados) {
 
-    return console.log("Hello")
+    const data = {
+        nome: dados.nome,
+        setor: dados.setor,
+        empresa: dados.empresa
+    };
+    
+    console.log(data)
+
+    const url = 'https://webhook.site/9dcd8afe-9ce6-4c31-ba78-c24ae347d899';  
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data sent successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error sending data:', error);
+    });
 }
