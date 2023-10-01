@@ -9,7 +9,18 @@ function marcarPresenca() {
         empresa: empresa ? empresa : ''
     };
 
-    sendData(dados);
+    if (!dados.nome || !dados.setor) {
+        alert("Por favor, preencha todos os campos corretamente.");
+        return;
+    }
+
+    try {   
+        sendData(dados);
+    } catch (error) {
+        console.error('erro', error);
+        alert("Ocorreu um erro ao enviar os dados.");
+        return;
+    }
 
     localStorage.setItem('dadosPresenca', JSON.stringify(dados));
 
@@ -28,15 +39,15 @@ function mostrarTipo() {
     }
 }
 
-// local storage pra não precisar inserir sempre os
-document.addEventListener('DOMContentLoaded', function() {
+// local storage pra não precisar inserir sempre os dados
+document.addEventListener('DOMContentLoaded', function () {
     const dados = JSON.parse(localStorage.getItem('dadosPresenca'));
 
     if (dados) {
         document.getElementById('nome').value = dados.nome;
         document.getElementById('setor').value = dados.setor;
         document.getElementById('tipo').value = dados.empresa;
-        mostrarTipo(); 
+        mostrarTipo();
     }
 });
 
@@ -47,28 +58,21 @@ function sendData(dados) {
         setor: dados.setor,
         empresa: dados.empresa
     };
-    
-    console.log(data)
 
-    const url = 'https://webhook.site/9dcd8afe-9ce6-4c31-ba78-c24ae347d899';  
+    const url = 'https://webhook.site/9dcd8afe-9ce6-4c31-ba78-c24ae347d899';
 
     fetch(url, {
+        mode: 'no-cors',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Data sent successfully:', data);
-    })
-    .catch(error => {
-        console.error('Error sending data:', error);
-    });
+        .then(data => {
+            console.log('Dados enviados:', data);
+        })
+        .catch(error => {
+            console.error('Erro ao enviar os dados', error);
+        });
 }
